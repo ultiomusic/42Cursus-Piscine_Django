@@ -15,19 +15,8 @@ def main():
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>periodic_table</title>
-  <style>
-    table{{
-      border-collapse: collapse;
-    }}
-    h4 {{
-      text-align: center;
-    }}
-    ul {{
-      list-style:none;
-      padding-left:0px;
-    }}
-  </style>
+  <title>Periodic Table</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <table>
@@ -38,15 +27,52 @@ def main():
 """
 
     TEMPLATE = """
-      <td style="border: 1px solid black; padding:10px">
-        <h4>{name}</h4>
-        <ul>
-          <li>No {number}</li>
-          <li>{small}</li>
-          <li>{molar}</li>
-          <li>{electron} electron</li>
+      <td class="element-cell">
+        <h4 class="element-name">{name}</h4>
+        <ul class="element-list">
+          <li class="element-list-item">No {number}</li>
+          <li class="element-list-item">{small}</li>
+          <li class="element-list-item">{molar}</li>
+          <li class="element-list-item">{electron} electron</li>
         </ul>
       </td>
+"""
+
+    CSS_CONTENT = """
+body {
+  font-family: sans-serif;
+  background-color: black; /* Set body background to black if you want */
+  color: white; /* Set default text color to white for better contrast on black background */
+}
+table {
+  border-collapse: collapse;
+  width: 80%; /* Adjust table width as needed */
+  margin: 20px auto; /* Center the table */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* White shadow for better visibility on black */
+  background-color: black; /* Set table background to black */
+}
+.element-cell {
+  border: 1px solid #555; /* Darker border for cells to be visible on black background */
+  padding: 15px;
+  text-align: center;
+  vertical-align: top; /* Align content to the top */
+  background-color: #333; /* Darker background for cells for contrast */
+  color: white; /* Set text color in cells to white */
+}
+.element-name {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #eee; /* Lighter color for names */
+}
+.element-list {
+  list-style:none;
+  padding-left:0px;
+}
+.element-list-item {
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  color: #ddd; /* Slightly lighter color for list items */
+}
 """
 
     body = "<tr>"
@@ -69,9 +95,14 @@ def main():
             electron=dic["electron"],
         )
     body += "    </tr>\n"
-    f = open("periodic_table.html", "w")
-    f.write(HTML.format(body=body))
-    f.close()
+
+    # Create and write CSS file
+    with open("periodic_table.css", "w") as css_file:
+        css_file.write(CSS_CONTENT)
+
+    # Create and write HTML file
+    with open("periodic_table.html", "w") as html_file:
+        html_file.write(HTML.format(body=body))
 
 
 if __name__ == '__main__':
